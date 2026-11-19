@@ -1,0 +1,35 @@
+name: release
+
+# Pushing a tag like v1.0.0 publishes a GitHub release with the BetterDiscord plugin file attached,
+# so the README's "download BuzzDropLinks.plugin.js" link always serves the newest version.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Tests
+        run: node --test "tests/*.test.*"
+      - name: The tag must match the plugin's version
+        run: |
+          plugin_version=$(grep -m1 '@version' BuzzDropLinks.plugin.js | sed 's/.*@version[[:space:]]*//' | tr -d '\r ')
+          tag_version="${GITHUB_REF_NAME#v}"
+          echo "plugin $plugin_version, tag $tag_version"
+          test "$plugin_version" = "$tag_version"
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" BuzzDropLinks.plugin.js \
+            --title "BuzzDrop for Discord ${GITHUB_REF_NAME#v}" \
+            --notes "BetterDiscord: download BuzzDropLinks.plugin.js and put it in BetterDiscord's plugins folder (Settings > BetterDiscord > Plugins > Open Plugins Folder). Vencord: build the vencord/buzzDropLinks folder into Vencord, see the README. Needs BuzzDrop: https://github.com/YAYTN/BuzzDrop/releases/latest"
