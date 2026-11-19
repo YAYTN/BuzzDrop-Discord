@@ -47,7 +47,7 @@ Discord's rules don't allow client modifications such as BetterDiscord and Venco
 ## For developers
 
 ```
-node --test tests/
+node --test "tests/*.test.*"
 ```
 
 The tests (Node 24 or newer) check that link detection, in both plugins, gives the same answers as BuzzDrop's own link reader (`tests/fixtures.json` was produced by BuzzDrop's `find_codes`), the menu item, and the hand-over. They don't start Discord.

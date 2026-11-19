@@ -4,5 +4,5 @@
   "private": true,
   "description": "Right-click a Discord message with a BZ:// or BuzzHeavier link and download it with BuzzDrop (BetterDiscord plugin).",
   "license": "MIT",
-  "scripts": { "test": "node --test tests/" }
+  "scripts": { "test": "node --test \"tests/*.test.*\"" }
 }
