@@ -17,9 +17,28 @@ Right-click a message that contains a link such as `BZ://h0l6lgmru052` or `https
 - On Windows, if no program is registered for `BZ://` links, the plugin says so and offers BuzzDrop's download page. It never opens anything unless you click the menu item.
 - The plugin only reads the text of the message you right-click. It sends nothing anywhere, has no settings, and never touches the network. All it does is ask your computer to open `bz://code`.
 
-## Vencord
+## Install (Vencord)
 
-A Vencord version is planned. Vencord plugins have to be built into Vencord from source, so it will be a "user plugin" folder rather than a single file.
+Vencord can't load a plugin from a single file: custom plugins are built into Vencord from its source code. You need [Git](https://git-scm.com), [Node.js](https://nodejs.org) and [pnpm](https://pnpm.io).
+
+1. Install [BuzzDrop](https://github.com/YAYTN/BuzzDrop/releases/latest) and run it once.
+2. Get Vencord's source and its dependencies:
+   ```
+   git clone https://github.com/Vendicated/Vencord.git
+   cd Vencord
+   pnpm install --frozen-lockfile
+   ```
+3. Copy this repository's `vencord/buzzDropLinks` folder into `Vencord/src/userplugins/`.
+4. Build it and put it into Discord, then restart Discord:
+   ```
+   pnpm build
+   pnpm inject
+   ```
+5. In Discord open **Settings → Vencord → Plugins**, find **BuzzDropLinks** and switch it on.
+
+This replaces a normal Vencord install with your own build. To go back to the standard one, run `pnpm uninject` and install Vencord with its regular installer. Your own build doesn't update itself: to update, `git pull`, `pnpm install --frozen-lockfile`, `pnpm build`.
+
+The plugin was typechecked and built against Vencord's current source, but a Vencord update can change its plugin interface and break it until the plugin is updated. Vencord's own code is GPL-3.0; so the plugin in the `vencord` folder is GPL-3.0-or-later too (see `vencord/LICENSE`), while the rest of this repository is MIT.
 
 ## A fair warning
 
@@ -31,6 +50,6 @@ Discord's rules don't allow client modifications such as BetterDiscord and Venco
 node --test tests/
 ```
 
-The tests check that link detection gives the same answers as BuzzDrop's own link reader (`tests/fixtures.json` was produced by BuzzDrop's `find_codes`), the menu item, and the hand-over. They don't start Discord.
+The tests (Node 24 or newer) check that link detection, in both plugins, gives the same answers as BuzzDrop's own link reader (`tests/fixtures.json` was produced by BuzzDrop's `find_codes`), the menu item, and the hand-over. They don't start Discord.
 
-MIT licensed.
+The BetterDiscord plugin and everything outside the `vencord` folder is MIT licensed. The Vencord plugin is GPL-3.0-or-later.
