@@ -41,6 +41,26 @@ async function download(codes: string[]) {
     }
 }
 
+// BuzzDrop's download arrow, drawn like Discord's own menu icons (one colour that follows the text).
+function DownloadIcon({ width = 18, height = 18, className }: { width?: number; height?: number; className?: string; }) {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            width={width}
+            height={height}
+            className={className}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+        >
+            <path d="M12 3.5V15M7 10l5 5 5-5M4 15v4h16v-4" />
+        </svg>
+    );
+}
+
 const messageContextMenu: NavContextMenuPatchCallback = (children, props) => {
     try {
         const codes = findCodes(props?.message?.content);
@@ -51,6 +71,8 @@ const messageContextMenu: NavContextMenuPatchCallback = (children, props) => {
                 <Menu.MenuItem
                     id="buzzdrop-download"
                     label={label}
+                    icon={DownloadIcon}
+                    leadingAccessory={{ type: "icon", icon: DownloadIcon }}
                     action={() => download(codes)}
                 />
             </Menu.MenuGroup>

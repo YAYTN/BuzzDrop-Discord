@@ -44,6 +44,33 @@ function findCodes(text) {
 }
 
 /* ---------------------------------------------------------------------------
+ * The little icon next to the menu text: BuzzDrop's download arrow, drawn like Discord's own menu icons
+ * (18px, one colour that follows the text, 2px round strokes).
+ * ------------------------------------------------------------------------- */
+const ICON_PATH = "M12 3.5V15M7 10l5 5 5-5M4 15v4h16v-4";
+
+function makeIcon() {
+    try {
+        const React = BdApi.React;
+        if (!React || typeof React.createElement !== "function") return undefined;
+        return (props) => React.createElement("svg", {
+            viewBox: "0 0 24 24",
+            width: (props && props.width) || 18,
+            height: (props && props.height) || 18,
+            className: props && props.className,
+            fill: "none",
+            stroke: "currentColor",
+            strokeWidth: 2,
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            "aria-hidden": true,
+        }, React.createElement("path", { d: ICON_PATH }));
+    } catch (e) {
+        return undefined;               // no icon is better than no menu item
+    }
+}
+
+/* ---------------------------------------------------------------------------
  * Talking to the computer. Kept in one object so the tests can replace it.
  * ------------------------------------------------------------------------- */
 const deps = {
@@ -127,6 +154,8 @@ module.exports = class BuzzDropLinks {
                 const label = codes.length === 1 ? "Download with BuzzDrop"
                     : "Download " + codes.length + " links with BuzzDrop";
                 const item = { type: "text", id: "buzzdrop-download", label, action: () => download(codes) };
+                const icon = makeIcon();
+                if (icon) item.icon = icon;
                 const menu = BdApi.ContextMenu;
                 if (typeof menu.buildMenuChildren === "function") {
                     tree.props.children.push(...menu.buildMenuChildren([{ type: "group", items: [item] }]));
@@ -151,5 +180,7 @@ module.exports = class BuzzDropLinks {
 
 // Handles for the tests (BetterDiscord only looks at the class itself).
 module.exports.findCodes = findCodes;
+module.exports.makeIcon = makeIcon;
+module.exports.ICON_PATH = ICON_PATH;
 module.exports.download = download;
 module.exports.deps = deps;

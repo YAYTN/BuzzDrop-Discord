@@ -34,9 +34,42 @@ function fakeDiscord() {
             buildMenuChildren(setup) { return setup.map((g) => ({ group: g.items.map((i) => i) })); },
         },
         UI: { showToast() {}, showConfirmationModal() {} },
+        React: { createElement: (type, props, ...children) => ({ type, props, children }) },
     };
     return calls;
 }
+
+test("the menu item has a small download icon that follows the text colour", () => {
+    fakeDiscord();
+    const icon = Plugin.makeIcon();
+    assert.equal(typeof icon, "function");
+    const svg = icon({ className: "x" });
+    assert.equal(svg.type, "svg");
+    assert.equal(svg.props.width, 18);                         // Discord's own menu icons are 18px
+    assert.equal(svg.props.stroke, "currentColor");
+    assert.equal(svg.props.className, "x");
+    assert.equal(svg.children[0].props.d, Plugin.ICON_PATH);
+    // the same drawing in the Vencord plugin
+    const fs = require("node:fs");
+    const vencord = fs.readFileSync(path.join(__dirname, "..", "vencord", "buzzDropLinks", "index.tsx"), "utf8");
+    assert.ok(vencord.includes('d="' + Plugin.ICON_PATH + '"'));
+});
+
+test("no React available means no icon, but the menu item still works", () => {
+    fakeDiscord();
+    delete global.BdApi.React;
+    assert.equal(Plugin.makeIcon(), undefined);
+    const calls = fakeDiscord();
+    delete global.BdApi.React;
+    const p = new Plugin();
+    p.start();
+    const tree = { props: { children: [] } };
+    calls.patched[0][1](tree, { message: { content: "bz://abcd1234efgh" } });
+    const item = tree.props.children[0].group[0];
+    assert.equal(item.label, "Download with BuzzDrop");
+    assert.equal(item.icon, undefined);
+    p.stop();
+});
 
 test("adds one menu item on a message with a link, none otherwise, and removes itself on stop", () => {
     const calls = fakeDiscord();
@@ -51,6 +84,7 @@ test("adds one menu item on a message with a link, none otherwise, and removes i
     assert.equal(withLink.props.children.length, 1);
     const item = withLink.props.children[0].group[0];
     assert.equal(item.label, "Download with BuzzDrop");
+    assert.equal(typeof item.icon, "function");                // the little download arrow
 
     const many = { props: { children: [] } };
     patch(many, { message: { content: "bz://aaaa1111bbbb https://buzzheavier.com/cccc2222dddd" } });
