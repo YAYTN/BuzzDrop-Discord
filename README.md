@@ -1,4 +1,4 @@
-﻿# BuzzDrop for Discord
+# BuzzDrop for Discord
 
 Right-click a Discord message that contains a **`BZ://`** or **BuzzHeavier** link and choose **Download with BuzzDrop**. BuzzDrop opens and starts the download.
 

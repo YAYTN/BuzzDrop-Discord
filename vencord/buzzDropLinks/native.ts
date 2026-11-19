@@ -1,4 +1,4 @@
-﻿/*
+/*
  * BuzzDropLinks, a Vencord user plugin
  * Copyright (c) 2026 YAYTN
  * SPDX-License-Identifier: GPL-3.0-or-later
