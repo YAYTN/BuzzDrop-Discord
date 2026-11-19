@@ -1,0 +1,88 @@
+[
+ {
+  "text": "BZ://h0l6lgmru052",
+  "codes": [
+   "h0l6lgmru052"
+  ]
+ },
+ {
+  "text": "bz://H0L6LGMRU052 and https://buzzheavier.com/abcd1234efgh",
+  "codes": [
+   "h0l6lgmru052",
+   "abcd1234efgh"
+  ]
+ },
+ {
+  "text": "look: buzzheavier.com/abcd1234efgh, www.buzzheavier.com/zzzz9999yyyy)",
+  "codes": [
+   "abcd1234efgh",
+   "zzzz9999yyyy"
+  ]
+ },
+ {
+  "text": "https://bzzhr.co/qwer1234tyui",
+  "codes": [
+   "qwer1234tyui"
+  ]
+ },
+ {
+  "text": "bz: h0l6lgmru052",
+  "codes": [
+   "h0l6lgmru052"
+  ]
+ },
+ {
+  "text": "bz:/h0l6lgmru052",
+  "codes": [
+   "h0l6lgmru052"
+  ]
+ },
+ {
+  "text": "BZ://short",
+  "codes": []
+ },
+ {
+  "text": "https://buzzheavier.com/settings",
+  "codes": []
+ },
+ {
+  "text": "https://buzzheavier.com/developers and bz://abcd1234efgh",
+  "codes": [
+   "abcd1234efgh"
+  ]
+ },
+ {
+  "text": "nothing to see here",
+  "codes": []
+ },
+ {
+  "text": "",
+  "codes": []
+ },
+ {
+  "text": "bz://abcd1234efgh bz://ABCD1234EFGH https://buzzheavier.com/abcd1234efgh",
+  "codes": [
+   "abcd1234efgh"
+  ]
+ },
+ {
+  "text": "bz://abcd1234efghijklmnopqrstuvwxyz0123456789",
+  "codes": []
+ },
+ {
+  "text": "xbz://abcd1234efgh",
+  "codes": []
+ },
+ {
+  "text": "https://notbuzzheavier.com/abcd1234efgh",
+  "codes": []
+ },
+ {
+  "text": "text before bz://aaaa1111bbbb then https://buzzheavier.com/cccc2222dddd and bz://eeee3333ffff",
+  "codes": [
+   "aaaa1111bbbb",
+   "cccc2222dddd",
+   "eeee3333ffff"
+  ]
+ }
+]
